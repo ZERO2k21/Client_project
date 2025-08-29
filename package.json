@@ -1,0 +1,149 @@
+{
+  "name": "CognaAI",
+  "displayName": "CognaAI - Code Complexity Predictor",
+  "description": "LLM-powered real-time code complexity prediction for cognitive load management using Gemini API",
+  "version": "0.0.1",
+  "publisher": "cognai",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Linters",
+    "Programming Languages",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "complexity",
+    "cognitive load",
+    "code analysis",
+    "AI",
+    "LLM",
+    "gemini"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:python",
+    "onLanguage:java",
+    "onLanguage:csharp",
+    "onLanguage:cpp",
+    "onLanguage:c"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cognaai.analyzeComplexity",
+        "title": "Analyze Code Complexity",
+        "category": "CognaAI"
+      },
+      {
+        "command": "cognaai.toggleAnalysis",
+        "title": "Toggle Real-time Analysis",
+        "category": "CognaAI"
+      },
+      {
+        "command": "cognaai.showComplexityReport",
+        "title": "Show Complexity Report",
+        "category": "CognaAI"
+      },
+      {
+        "command": "cognaai.configureApiKey",
+        "title": "Configure Gemini API Key",
+        "category": "CognaAI"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "CognaAI Configuration",
+      "properties": {
+        "cognaai.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable real-time complexity analysis"
+        },
+        "cognaai.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Gemini API key for complexity analysis"
+        },
+        "cognaai.analysisDelay": {
+          "type": "number",
+          "default": 1000,
+          "description": "Delay in milliseconds before analyzing after code changes"
+        },
+        "cognaai.complexityThresholds": {
+          "type": "object",
+          "default": {
+            "low": 10,
+            "medium": 20,
+            "high": 30
+          },
+          "description": "Thresholds for complexity levels"
+        },
+        "cognaai.showInStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show complexity score in status bar"
+        },
+        "cognaai.showDecorations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show complexity decorations in editor"
+        },
+        "cognaai.supportedLanguages": {
+          "type": "array",
+          "default": [
+            "javascript",
+            "typescript",
+            "python",
+            "java",
+            "csharp",
+            "cpp",
+            "c"
+          ],
+          "description": "Languages to analyze for complexity"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "cognaai.analyzeComplexity",
+        "key": "ctrl+shift+c",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.90.0",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.25.8",
+    "eslint": "^9.32.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@types/axios": "^0.9.36",
+    "axios": "^1.11.0"
+  }
+}
